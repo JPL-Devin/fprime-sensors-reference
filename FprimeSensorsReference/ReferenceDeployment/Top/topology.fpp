@@ -22,7 +22,7 @@ module ReferenceDeployment {
     import NmeaGps.Subtopology
     import MpuImu.Subtopology
     import Bmp280.Subtopology
-    import Rfm69.SimSubtopology
+    import Rfm69.Subtopology
     
   # ----------------------------------------------------------------------
   # Instances used in the topology
@@ -34,7 +34,6 @@ module ReferenceDeployment {
     instance rateGroupDriver
     instance systemResources
     instance timer
-    instance comDriver
     instance cmdSeq
 
   # ----------------------------------------------------------------------
@@ -93,22 +92,6 @@ module ReferenceDeployment {
       # RFM69 manager <-> FrameAccumulator (Uplink)
       Rfm69.rfm69Manager.dataOut              -> ComCcsds.frameAccumulator.dataIn
       ComCcsds.frameAccumulator.dataReturnOut -> Rfm69.rfm69Manager.dataReturnIn
-    }
-
-    connections SimulatedAir {
-      # RFM69 sim buffer allocations
-      Rfm69.rfm69Sim.allocate   -> ComCcsds.commsBufferManager.bufferGetCallee
-      Rfm69.rfm69Sim.deallocate -> ComCcsds.commsBufferManager.bufferSendIn
-
-      # ComDriver buffer allocations
-      comDriver.allocate   -> ComCcsds.commsBufferManager.bufferGetCallee
-      comDriver.deallocate -> ComCcsds.commsBufferManager.bufferSendIn
-
-      # ComDriver <-> RFM69 sim air interface (tunnels simulated RF over TCP)
-      comDriver.$recv                    -> Rfm69.rfm69Sim.airDataIn
-      Rfm69.rfm69Sim.airDataReturnOut    -> comDriver.recvReturnIn
-      Rfm69.rfm69Sim.airDataOut          -> comDriver.$send
-      comDriver.ready                    -> Rfm69.rfm69Sim.airReady
     }
 
     connections FileHandling_DataProducts {
