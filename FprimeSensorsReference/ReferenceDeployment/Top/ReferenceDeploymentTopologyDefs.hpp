@@ -29,6 +29,7 @@
 #include "fprime-sensors/NmeaGps/Subtopology/SubtopologyTopologyDefs.hpp"
 #include "fprime-sensors/MpuImu/Subtopology/SubtopologyTopologyDefs.hpp"
 #include "fprime-sensors/Bmp280/Subtopology/SubtopologyTopologyDefs.hpp"
+#include "fprime-sensors/Rfm69/Subtopology/SubtopologyTopologyDefs.hpp"
 
 
 /**
@@ -77,6 +78,7 @@ struct TopologyState {
     NmeaGps::SubtopologyState gps;               //!< Subtopology state for NmeaGps 
     MpuImu::SubtopologyState mpu;                //!< Subtopology state for MpuImu
     Bmp280::SubtopologyState bmp;                //!< Subtopology state for Bmp280 
+    Rfm69::SubtopologyState rfm69;               //!< Subtopology state for Rfm69
 
 };
 
